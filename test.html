@@ -44,21 +44,33 @@
       //   xmlhttp.send();
       var testButton = document.getElementById('test');
 
+      var URLname = 'http://api.openweathermap.org/data/2.5/forecast?q=';
+
       var apikey = '3fe38ff62ad3a6ae6fd6a37601280073';
+
+      //   testButton.addEventListener('click', function() {
+      //     var city = prompt('city?');
+      //     var queryURL = URLname + city + '&APPID=' + apikey;
+      //     $.ajax({
+      //       url: queryURL,
+      //       method: 'GET'
+      //     }).then(function(response) {
+      //       console.log(response);
+      //     });
+      //   });
 
       testButton.addEventListener('click', function() {
         var city = prompt('city?');
-        var queryURL =
-          'http://api.openweathermap.org/data/2.5/forecast?q= ' +
-          city +
-          '&APPID=' +
-          apikey;
-        $.ajax({
-          url: queryURL,
-          method: 'GET'
-        }).then(function(response) {
-          console.log(response);
-        });
+        var queryURL = URLname + city + '&APPID=' + apikey;
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            var response = JSON.parse(this.responseText);
+            console.log(response);
+          }
+        };
+        xmlhttp.open('GET', queryURL, true);
+        xmlhttp.send();
       });
     </script>
   </body>
