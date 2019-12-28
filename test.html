@@ -8,6 +8,7 @@
   </head>
   <body>
     <button id="test">Test</button>
+    <p id="testPara"></p>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script>
@@ -43,6 +44,7 @@
       //   xmlhttp.open('GET', queryURL, true);
       //   xmlhttp.send();
       var testButton = document.getElementById('test');
+      var testParagraph = document.getElementById('testPara');
 
       var URLname = 'http://api.openweathermap.org/data/2.5/forecast?q=';
 
@@ -67,6 +69,12 @@
           if (this.readyState == 4 && this.status == 200) {
             var response = JSON.parse(this.responseText);
             console.log(response);
+            testParagraph.textContent =
+              response.city.name +
+              ', ' +
+              response.city.country +
+              ': population ' +
+              response.city.population;
           }
         };
         xmlhttp.open('GET', queryURL, true);
