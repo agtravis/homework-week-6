@@ -9,6 +9,7 @@
   <body>
     <button id="test">Test</button>
     <p id="testPara"></p>
+    <img id="icon" src="" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script>
@@ -45,6 +46,7 @@
       //   xmlhttp.send();
       var testButton = document.getElementById('test');
       var testParagraph = document.getElementById('testPara');
+      var iconImage = document.getElementById('icon');
 
       var URLname = 'http://api.openweathermap.org/data/2.5/forecast?q=';
 
@@ -69,17 +71,42 @@
           if (this.readyState == 4 && this.status == 200) {
             var response = JSON.parse(this.responseText);
             console.log(response);
+            console.log(response.list[0].weather[0].icon);
             testParagraph.textContent =
               response.city.name +
               ', ' +
               response.city.country +
               ': population ' +
-              response.city.population;
+              response.city.population +
+              ' ' +
+              response.list[0].weather[0].icon;
+            //.list[0] is current, [39] is 5 days from now. each [i] is 10800 seconds or 3 hours
+            iconImage.setAttribute(
+              'src',
+              'http://openweathermap.org/img/wn/' +
+                response.list[0].weather[0].icon +
+                '@2x.png'
+            );
           }
         };
         xmlhttp.open('GET', queryURL, true);
         xmlhttp.send();
       });
+
+      //openweathermap.org/img/wn/10d@2x.png
+
+      http: var d = new Date();
+      //get milliseconds since epoch
+      var n = d.getTime();
+
+      //convert to seconds
+      console.log(n);
+      n = n / 1000;
+
+      console.log(n);
+      //round down to current 3 hour time slot, + 3 hours to get to next forecast
+      n = n - (n % 10800) + 10800;
+      console.log(n);
     </script>
   </body>
 </html>
