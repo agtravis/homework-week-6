@@ -64,6 +64,12 @@
       //   });
       var searchedCities = [];
 
+      init();
+
+      function init() {
+        searchedCities = JSON.parse(localStorage.getItem('searchedCities'));
+      }
+
       testButton.addEventListener('click', function() {
         var city = pickCity();
         var queryURL = URLname + city + '&APPID=' + apikey;
@@ -98,11 +104,15 @@
         var city = prompt('city?');
         if (!searchedCities.includes(city)) {
           searchedCities.unshift(city);
+        } else if (searchedCities.includes(city)) {
+          searchedCities.splice(searchedCities.indexOf(city), 1);
+          searchedCities.unshift(city);
         }
         while (searchedCities.length > 8) {
           searchedCities.pop();
         }
         console.log(searchedCities);
+        localStorage.setItem('searchedCities', JSON.stringify(searchedCities));
         return searchedCities[0];
       }
 
