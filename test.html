@@ -62,9 +62,10 @@
       //       console.log(response);
       //     });
       //   });
+      var searchedCities = [];
 
       testButton.addEventListener('click', function() {
-        var city = prompt('city?');
+        var city = pickCity();
         var queryURL = URLname + city + '&APPID=' + apikey;
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
@@ -92,6 +93,18 @@
         xmlhttp.open('GET', queryURL, true);
         xmlhttp.send();
       });
+
+      function pickCity() {
+        var city = prompt('city?');
+        if (!searchedCities.includes(city)) {
+          searchedCities.unshift(city);
+        }
+        while (searchedCities.length > 8) {
+          searchedCities.pop();
+        }
+        console.log(searchedCities);
+        return searchedCities[0];
+      }
 
       //openweathermap.org/img/wn/10d@2x.png
 
