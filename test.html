@@ -52,7 +52,7 @@
       var searchedCitiesUL = document.getElementById('searchedCitiesUL');
       var testInput = document.getElementById('test-input');
 
-      var URLname = 'http://api.openweathermap.org/data/2.5/forecast?q=';
+      var URLname = 'http://api.openweathermap.org/data/2.5/';
 
       var apikey = '3fe38ff62ad3a6ae6fd6a37601280073';
 
@@ -68,6 +68,8 @@
       //   });
       var searchedCities = [];
       var cityLinks = [];
+      var lat = '';
+      var long = '';
 
       init();
 
@@ -83,7 +85,7 @@
 
       function searchCity(userCityChoice) {
         var city = pickCity(userCityChoice);
-        var queryURL = URLname + city + '&APPID=' + apikey;
+        var queryURL = URLname + 'forecast?q=' + city + '&APPID=' + apikey;
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
@@ -169,6 +171,47 @@
       //round down to current 3 hour time slot, + 3 hours to get to next forecast
       n = n - (n % 10800) + 10800;
       console.log(n);
+
+      navigator.geolocation.getCurrentPosition(showPosition);
+      function showPosition(position) {
+        // console.log(position);
+        // console.log(position.coords.latitude);
+        // console.log(position.coords.longitude);
+        lat = /*Math.round(*/ position.coords.latitude /*)*/;
+        long = /*Math.round(*/ position.coords.longitude /*)*/;
+        console.log('lat: ' + lat + '\nlong: ' + long);
+        currentCity(lat, long);
+      }
+      //api.openweathermap.org/data/2.5/forecast?lat=48lon=-122&APPID=3fe38ff62ad3a6ae6fd6a37601280073
+      //api.openweathermap.org/data/2.5/weather?lat=35&lon=139
+
+      ttp: function currentCity(lat, long) {
+        var queryURL =
+          URLname + 'weather?lat=' + lat + '&lon=' + long + '&APPID=' + apikey;
+        console.log(queryURL);
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            var response = JSON.parse(this.responseText);
+            console.log(response);
+            console.log(response.weather[0].icon);
+            testParagraph.textContent =
+              response.name +
+              ', ' +
+              response.sys.country +
+              ' ' +
+              response.weather[0].icon;
+            iconImage.setAttribute(
+              'src',
+              'http://openweathermap.org/img/wn/' +
+                response.weather[0].icon +
+                '@2x.png'
+            );
+          }
+        };
+        xmlhttp.open('GET', queryURL, true);
+        xmlhttp.send();
+      }
     </script>
   </body>
 </html>
