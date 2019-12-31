@@ -71,17 +71,18 @@
 
       init();
 
+      //fills empty array with history of searches
       function init() {
         searchedCities = JSON.parse(localStorage.getItem('searchedCities'));
         renderSearchedCities();
       }
 
       testButton.addEventListener('click', function() {
-        searchCity();
+        searchCity(testInput.value);
       });
 
-      function searchCity() {
-        var city = pickCity();
+      function searchCity(userCityChoice) {
+        var city = pickCity(userCityChoice);
         var queryURL = URLname + city + '&APPID=' + apikey;
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
@@ -110,11 +111,11 @@
         xmlhttp.send();
       }
 
-      function pickCity() {
-        if (!testInput.value) {
+      function pickCity(userCityChoice) {
+        if (!userCityChoice) {
           alert('Please enter a city');
         } else {
-          var city = testInput.value;
+          var city = userCityChoice;
           if (!searchedCities.includes(city)) {
             searchedCities.unshift(city);
           } else if (searchedCities.includes(city)) {
@@ -150,13 +151,13 @@
       searchedCitiesUL.addEventListener('click', function(event) {
         var element = event.target;
         if (element.matches('li')) {
-          alert(element.textContent);
+          searchCity(element.textContent);
         }
       });
 
       //openweathermap.org/img/wn/10d@2x.png
 
-      http: var d = new Date();
+      var d = new Date();
       //get milliseconds since epoch
       var n = d.getTime();
 
