@@ -7,6 +7,7 @@
     <title>Document</title>
   </head>
   <body>
+    <input type="text" id="test-input" />
     <button id="test">Test</button>
     <p id="testPara"></p>
     <img id="icon" src="" />
@@ -49,6 +50,7 @@
       var testParagraph = document.getElementById('testPara');
       var iconImage = document.getElementById('icon');
       var searchedCitiesUL = document.getElementById('searchedCitiesUL');
+      var testInput = document.getElementById('test-input');
 
       var URLname = 'http://api.openweathermap.org/data/2.5/forecast?q=';
 
@@ -109,20 +111,27 @@
       }
 
       function pickCity() {
-        var city = prompt('city?');
-        if (!searchedCities.includes(city)) {
-          searchedCities.unshift(city);
-        } else if (searchedCities.includes(city)) {
-          searchedCities.splice(searchedCities.indexOf(city), 1);
-          searchedCities.unshift(city);
+        if (!testInput.value) {
+          alert('Please enter a city');
+        } else {
+          var city = testInput.value;
+          if (!searchedCities.includes(city)) {
+            searchedCities.unshift(city);
+          } else if (searchedCities.includes(city)) {
+            searchedCities.splice(searchedCities.indexOf(city), 1);
+            searchedCities.unshift(city);
+          }
+          while (searchedCities.length > 8) {
+            searchedCities.pop();
+          }
+          console.log(searchedCities);
+          localStorage.setItem(
+            'searchedCities',
+            JSON.stringify(searchedCities)
+          );
+          init();
+          return searchedCities[0];
         }
-        while (searchedCities.length > 8) {
-          searchedCities.pop();
-        }
-        console.log(searchedCities);
-        localStorage.setItem('searchedCities', JSON.stringify(searchedCities));
-        init();
-        return searchedCities[0];
       }
 
       function renderSearchedCities() {
