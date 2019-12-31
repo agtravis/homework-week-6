@@ -10,6 +10,7 @@
     <button id="test">Test</button>
     <p id="testPara"></p>
     <img id="icon" src="" />
+    <ul id="searchedCitiesUL"></ul>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script>
@@ -47,6 +48,7 @@
       var testButton = document.getElementById('test');
       var testParagraph = document.getElementById('testPara');
       var iconImage = document.getElementById('icon');
+      var searchedCitiesUL = document.getElementById('searchedCitiesUL');
 
       var URLname = 'http://api.openweathermap.org/data/2.5/forecast?q=';
 
@@ -68,6 +70,7 @@
 
       function init() {
         searchedCities = JSON.parse(localStorage.getItem('searchedCities'));
+        renderSearchedCities();
       }
 
       testButton.addEventListener('click', function() {
@@ -113,7 +116,19 @@
         }
         console.log(searchedCities);
         localStorage.setItem('searchedCities', JSON.stringify(searchedCities));
+        init();
         return searchedCities[0];
+      }
+
+      function renderSearchedCities() {
+        searchedCitiesUL.innerHTML = '';
+        for (var i = 0; i < searchedCities.length; ++i) {
+          var searchedCity = searchedCities[i];
+          var li = document.createElement('li');
+          li.textContent = searchedCity;
+          li.setAttribute('class', 'searched-city');
+          searchedCitiesUL.appendChild(li);
+        }
       }
 
       //openweathermap.org/img/wn/10d@2x.png
