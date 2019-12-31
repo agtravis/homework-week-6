@@ -65,6 +65,7 @@
       //     });
       //   });
       var searchedCities = [];
+      var cityLinks = [];
 
       init();
 
@@ -74,6 +75,10 @@
       }
 
       testButton.addEventListener('click', function() {
+        searchCity();
+      });
+
+      function searchCity() {
         var city = pickCity();
         var queryURL = URLname + city + '&APPID=' + apikey;
         var xmlhttp = new XMLHttpRequest();
@@ -101,7 +106,7 @@
         };
         xmlhttp.open('GET', queryURL, true);
         xmlhttp.send();
-      });
+      }
 
       function pickCity() {
         var city = prompt('city?');
@@ -129,7 +134,16 @@
           li.setAttribute('class', 'searched-city');
           searchedCitiesUL.appendChild(li);
         }
+        // cityLinks = document.getElementsByClassName('searched-city');
+        // console.log(cityLinks[0].textContent);
       }
+
+      searchedCitiesUL.addEventListener('click', function(event) {
+        var element = event.target;
+        if (element.matches('li')) {
+          alert(element.textContent);
+        }
+      });
 
       //openweathermap.org/img/wn/10d@2x.png
 
