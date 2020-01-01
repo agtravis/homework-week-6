@@ -34,10 +34,21 @@ function renderSearchedCities() {
 
 cityInputField.addEventListener('keyup', function(event) {
   if (event.key === 'Enter') {
+    cityInputField.value = capitalize(cityInputField.value);
     searchCity(cityInputField.value);
     cityInputField.value = '';
   }
 });
+
+function capitalize(userCityChoice) {
+  userCityChoice = userCityChoice.toLowerCase();
+  userCityChoice = userCityChoice.split(' ');
+  for (var i = 0; i < userCityChoice.length; ++i) {
+    userCityChoice[i] =
+      userCityChoice[i].charAt(0).toUpperCase() + userCityChoice[i].slice(1);
+  }
+  return userCityChoice.join(' ');
+}
 
 function searchCity(userCityChoice) {
   var city = pickCity(userCityChoice);
@@ -53,6 +64,7 @@ function searchCity(userCityChoice) {
     xmlhttp.open('GET', queryURL, true);
     xmlhttp.onload = function() {
       if (this.status == 404) {
+        alert(searchedCities[0] + ' is not a valid city name.');
         searchedCities.shift();
         if (searchedCities > 8) {
           searchedCities.push(lostCity);
