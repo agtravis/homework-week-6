@@ -7,6 +7,7 @@ var apikey = '3fe38ff62ad3a6ae6fd6a37601280073';
 var searchedCities = [];
 var lat = '';
 var lon = '';
+var lostCity = '';
 
 init();
 
@@ -50,6 +51,16 @@ function searchCity(userCityChoice) {
       }
     };
     xmlhttp.open('GET', queryURL, true);
+    xmlhttp.onload = function() {
+      if (this.status == 404) {
+        searchedCities.shift();
+        if (searchedCities > 8) {
+          searchedCities.push(lostCity);
+        }
+        localStorage.setItem('searchedCities', JSON.stringify(searchedCities));
+        init();
+      }
+    };
     xmlhttp.send();
   }
 }
@@ -67,14 +78,15 @@ function pickCity(userCityChoice) {
         searchedCities.unshift(city);
       }
       while (searchedCities.length > 8) {
+        lostCity = searchedCities[8];
         searchedCities.pop();
+        console.log(lostCity);
       }
       localStorage.setItem('searchedCities', JSON.stringify(searchedCities));
       init();
       return searchedCities[0];
     }
   } else {
-    console.log(searchedCities);
     searchedCities.push(userCityChoice);
     localStorage.setItem('searchedCities', JSON.stringify(searchedCities));
     return searchedCities[0];
