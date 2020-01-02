@@ -66,7 +66,7 @@ function searchCity(userCityChoice) {
       if (this.status == 404) {
         alert(searchedCities[0] + ' is not a valid city name.');
         searchedCities.shift();
-        if (searchedCities > 8) {
+        if (searchedCities.length < 8 && lostCity !== '') {
           searchedCities.push(lostCity);
         }
         localStorage.setItem('searchedCities', JSON.stringify(searchedCities));
