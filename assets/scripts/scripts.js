@@ -17,9 +17,9 @@ var lon = '';
 var lostCity = '';
 
 var d = new Date();
-console.log(d);
-console.log(d.getMonth() + 1 + '/' + d.getDate() + '/' + d.getFullYear());
-console.log(d.getUTCDate());
+// console.log(d);
+// console.log(d.getMonth() + 1 + '/' + d.getDate() + '/' + d.getFullYear());
+// console.log(d.getUTCDate());
 currentDateElement.textContent =
   '(' + (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear() + ')';
 
@@ -56,11 +56,13 @@ function currentCity(lat, lon) {
       ).toFixed(1);
       currentHumidity.textContent = response.main.humidity;
       currentWindSpeed.textContent = response.wind.speed;
-      currentUV(lat, lon);
       // (0K − 273.15) × 9/5 + 32 = -459.7°F
     }
   };
   xmlhttp.open('GET', queryURL, true);
+  xmlhttp.onload = function() {
+    currentUV(lat, lon);
+  };
   xmlhttp.send();
 }
 
@@ -79,16 +81,12 @@ function currentUV(lat, lon) {
   var xmlhttpUVindex = new XMLHttpRequest();
   xmlhttpUVindex.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      console.log(this.responseText);
       var responseUVIndex = JSON.parse(this.responseText);
-      console.log(responseUVIndex);
-      console.log('this far');
-    } else {
-      console.log('not working');
+      currentUVIndex.textContent = responseUVIndex.value;
     }
-    xmlhttpUVindex.open('GET', queryURLUVindex, true);
-    xmlhttpUVindex.send();
   };
+  xmlhttpUVindex.open('GET', queryURLUVindex, true);
+  xmlhttpUVindex.send();
 }
 
 function init() {
