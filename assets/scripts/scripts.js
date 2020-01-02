@@ -1,5 +1,7 @@
 var cityInputField = document.getElementById('city-input-field');
 var searchedCitiesUL = document.getElementById('searched-cities-UL');
+var currentCityElement = document.getElementById('current-city');
+var currentDateElement = document.getElementById('current-date');
 
 var URLname = 'http://api.openweathermap.org/data/2.5/';
 var apikey = '3fe38ff62ad3a6ae6fd6a37601280073';
@@ -9,7 +11,38 @@ var lat = '';
 var lon = '';
 var lostCity = '';
 
+var d = new Date();
+console.log(d);
+console.log(d.getMonth() + 1 + '/' + d.getDate() + '/' + d.getFullYear());
+currentDateElement.textContent =
+  '(' + (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear() + ')';
+
 init();
+
+// navigator.geolocation.getCurrentPosition(showPosition);
+
+function showPosition(position) {
+  lat = position.coords.latitude;
+  lon = position.coords.longitude;
+  currentCity(lat, lon);
+}
+
+function currentCity(lat, lon) {
+  // console.log('lat: ' + lat + '\nlon: ' + lon);
+  var queryURL =
+    URLname + 'weather?lat=' + lat + '&lon=' + lon + '&APPID=' + apikey;
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var response = JSON.parse(this.responseText);
+      console.log(response);
+      currentCityElement.textContent =
+        response.name + ', ' + response.sys.country;
+    }
+  };
+  xmlhttp.open('GET', queryURL, true);
+  xmlhttp.send();
+}
 
 function init() {
   searchedCities = JSON.parse(localStorage.getItem('searchedCities'));
