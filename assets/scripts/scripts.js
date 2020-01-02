@@ -3,6 +3,10 @@ var searchedCitiesUL = document.getElementById('searched-cities-UL');
 var currentCityElement = document.getElementById('current-city');
 var currentDateElement = document.getElementById('current-date');
 var currentIcon = document.getElementById('current-icon');
+var currentTemperature = document.getElementById('current-temperature');
+var currentHumidity = document.getElementById('current-humidity');
+var currentWindSpeed = document.getElementById('current-wind-speed');
+var currentUVIndex = document.getElementById('current-uv-index');
 
 var URLname = 'https://api.openweathermap.org/data/2.5/';
 var apikey = '3fe38ff62ad3a6ae6fd6a37601280073';
@@ -37,7 +41,7 @@ function currentCity(lat, lon) {
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       var response = JSON.parse(this.responseText);
-      console.log(response);
+      // console.log(response);
       currentCityElement.textContent =
         response.name + ', ' + response.sys.country;
       currentIcon.setAttribute(
@@ -46,10 +50,45 @@ function currentCity(lat, lon) {
           response.weather[0].icon +
           '@2x.png'
       );
+      currentTemperature.textContent = (
+        (response.main.temp - 273.15) * (9 / 5) +
+        32
+      ).toFixed(1);
+      currentHumidity.textContent = response.main.humidity;
+      currentWindSpeed.textContent = response.wind.speed;
+      currentUV(lat, lon);
+      // (0K − 273.15) × 9/5 + 32 = -459.7°F
     }
   };
   xmlhttp.open('GET', queryURL, true);
   xmlhttp.send();
+}
+
+function currentUV(lat, lon) {
+  lat = Math.round(lat);
+  lon = Math.round(lon);
+  console.log('being called');
+  var queryURLUVindex =
+    'https://api.openweathermap.org/data/2.5/uvi?appid=' +
+    apikey +
+    '&lat=' +
+    lat +
+    '&lon=' +
+    lon;
+  console.log(queryURLUVindex);
+  var xmlhttpUVindex = new XMLHttpRequest();
+  xmlhttpUVindex.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log(this.responseText);
+      var responseUVIndex = JSON.parse(this.responseText);
+      console.log(responseUVIndex);
+      console.log('this far');
+    } else {
+      console.log('not working');
+    }
+    xmlhttpUVindex.open('GET', queryURLUVindex, true);
+    xmlhttpUVindex.send();
+  };
 }
 
 function init() {
