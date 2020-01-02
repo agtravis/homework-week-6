@@ -2,6 +2,7 @@ var cityInputField = document.getElementById('city-input-field');
 var searchedCitiesUL = document.getElementById('searched-cities-UL');
 var currentCityElement = document.getElementById('current-city');
 var currentDateElement = document.getElementById('current-date');
+var currentIcon = document.getElementById('current-icon');
 
 var URLname = 'http://api.openweathermap.org/data/2.5/';
 var apikey = '3fe38ff62ad3a6ae6fd6a37601280073';
@@ -14,12 +15,13 @@ var lostCity = '';
 var d = new Date();
 console.log(d);
 console.log(d.getMonth() + 1 + '/' + d.getDate() + '/' + d.getFullYear());
+console.log(d.getUTCDate());
 currentDateElement.textContent =
   '(' + (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear() + ')';
 
 init();
 
-// navigator.geolocation.getCurrentPosition(showPosition);
+navigator.geolocation.getCurrentPosition(showPosition);
 
 function showPosition(position) {
   lat = position.coords.latitude;
@@ -38,6 +40,12 @@ function currentCity(lat, lon) {
       console.log(response);
       currentCityElement.textContent =
         response.name + ', ' + response.sys.country;
+      currentIcon.setAttribute(
+        'src',
+        'http://openweathermap.org/img/wn/' +
+          response.weather[0].icon +
+          '@2x.png'
+      );
     }
   };
   xmlhttp.open('GET', queryURL, true);
@@ -73,6 +81,13 @@ cityInputField.addEventListener('keyup', function(event) {
   }
 });
 
+searchedCitiesUL.addEventListener('click', function(event) {
+  var element = event.target;
+  if (element.matches('li')) {
+    searchCity(element.textContent);
+  }
+});
+
 function capitalize(userCityChoice) {
   userCityChoice = userCityChoice.toLowerCase();
   userCityChoice = userCityChoice.split(' ');
@@ -92,6 +107,14 @@ function searchCity(userCityChoice) {
       if (this.readyState == 4 && this.status == 200) {
         var response = JSON.parse(this.responseText);
         console.log(response);
+        currentCityElement.textContent =
+          response.city.name + ', ' + response.city.country;
+        currentIcon.setAttribute(
+          'src',
+          'http://openweathermap.org/img/wn/' +
+            response.list[0].weather[0].icon +
+            '@2x.png'
+        );
       }
     };
     xmlhttp.open('GET', queryURL, true);
