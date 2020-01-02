@@ -4,7 +4,7 @@ var currentCityElement = document.getElementById('current-city');
 var currentDateElement = document.getElementById('current-date');
 var currentIcon = document.getElementById('current-icon');
 
-var URLname = 'http://api.openweathermap.org/data/2.5/';
+var URLname = 'https://api.openweathermap.org/data/2.5/';
 var apikey = '3fe38ff62ad3a6ae6fd6a37601280073';
 
 var searchedCities = [];
@@ -42,7 +42,7 @@ function currentCity(lat, lon) {
         response.name + ', ' + response.sys.country;
       currentIcon.setAttribute(
         'src',
-        'http://openweathermap.org/img/wn/' +
+        'https://openweathermap.org/img/wn/' +
           response.weather[0].icon +
           '@2x.png'
       );
@@ -111,7 +111,7 @@ function searchCity(userCityChoice) {
           response.city.name + ', ' + response.city.country;
         currentIcon.setAttribute(
           'src',
-          'http://openweathermap.org/img/wn/' +
+          'https://openweathermap.org/img/wn/' +
             response.list[0].weather[0].icon +
             '@2x.png'
         );
