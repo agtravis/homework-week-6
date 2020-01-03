@@ -23,6 +23,21 @@ var d = new Date();
 currentDateElement.textContent =
   '(' + (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear() + ')';
 
+console.log(d);
+var tomorrow = new Date(d);
+tomorrow.setDate(tomorrow.getDate() + 1);
+console.log(tomorrow);
+
+var twoDaysFromNow = new Date(d);
+twoDaysFromNow.setDate(twoDaysFromNow.getDate() + 2);
+console.log(twoDaysFromNow);
+var threeDaysFromNow = new Date(d);
+threeDaysFromNow.setDate(threeDaysFromNow.getDate() + 3);
+console.log(threeDaysFromNow);
+var fourDaysFromNow = new Date(d);
+fourDaysFromNow.setDate(fourDaysFromNow.getDate() + 4);
+console.log(fourDaysFromNow);
+
 init();
 
 navigator.geolocation.getCurrentPosition(showPosition);
