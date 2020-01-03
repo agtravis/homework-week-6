@@ -23,56 +23,68 @@ var d = new Date();
 currentDateElement.textContent =
   '(' + (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear() + ')';
 
-var tomorrow = new Date(d);
-tomorrow.setDate(tomorrow.getDate() + 1);
-var twoDaysFromNow = new Date(d);
-twoDaysFromNow.setDate(twoDaysFromNow.getDate() + 2);
-var threeDaysFromNow = new Date(d);
-threeDaysFromNow.setDate(threeDaysFromNow.getDate() + 3);
-var fourDaysFromNow = new Date(d);
-fourDaysFromNow.setDate(fourDaysFromNow.getDate() + 4);
-var fiveDaysFromNow = new Date(d);
-fiveDaysFromNow.setDate(fiveDaysFromNow.getDate() + 5);
+// var tomorrow = new Date(d);
+// tomorrow.setDate(tomorrow.getDate() + 1);
+// var twoDaysFromNow = new Date(d);
+// twoDaysFromNow.setDate(twoDaysFromNow.getDate() + 2);
+// var threeDaysFromNow = new Date(d);
+// threeDaysFromNow.setDate(threeDaysFromNow.getDate() + 3);
+// var fourDaysFromNow = new Date(d);
+// fourDaysFromNow.setDate(fourDaysFromNow.getDate() + 4);
+// var fiveDaysFromNow = new Date(d);
+// fiveDaysFromNow.setDate(fiveDaysFromNow.getDate() + 5);
 
-document.getElementById('forecast-1-date').textContent =
-  tomorrow.getMonth() +
-  1 +
-  '/' +
-  tomorrow.getDate() +
-  '/' +
-  tomorrow.getFullYear();
+for (var i = 1; i <= 5; ++i) {
+  var nextDay = new Date(d);
+  nextDay.setDate(nextDay.getDate() + i);
+  document.getElementById('forecast-' + i + '-date').textContent =
+    nextDay.getMonth() +
+    1 +
+    '/' +
+    nextDay.getDate() +
+    '/' +
+    nextDay.getFullYear();
+}
 
-document.getElementById('forecast-2-date').textContent =
-  twoDaysFromNow.getMonth() +
-  1 +
-  '/' +
-  twoDaysFromNow.getDate() +
-  '/' +
-  twoDaysFromNow.getFullYear();
+// document.getElementById('forecast-1-date').textContent =
+//   tomorrow.getMonth() +
+//   1 +
+//   '/' +
+//   tomorrow.getDate() +
+//   '/' +
+//   tomorrow.getFullYear();
 
-document.getElementById('forecast-3-date').textContent =
-  threeDaysFromNow.getMonth() +
-  1 +
-  '/' +
-  threeDaysFromNow.getDate() +
-  '/' +
-  threeDaysFromNow.getFullYear();
+// document.getElementById('forecast-2-date').textContent =
+//   twoDaysFromNow.getMonth() +
+//   1 +
+//   '/' +
+//   twoDaysFromNow.getDate() +
+//   '/' +
+//   twoDaysFromNow.getFullYear();
 
-document.getElementById('forecast-4-date').textContent =
-  fourDaysFromNow.getMonth() +
-  1 +
-  '/' +
-  fourDaysFromNow.getDate() +
-  '/' +
-  fourDaysFromNow.getFullYear();
+// document.getElementById('forecast-3-date').textContent =
+//   threeDaysFromNow.getMonth() +
+//   1 +
+//   '/' +
+//   threeDaysFromNow.getDate() +
+//   '/' +
+//   threeDaysFromNow.getFullYear();
 
-document.getElementById('forecast-5-date').textContent =
-  fiveDaysFromNow.getMonth() +
-  1 +
-  '/' +
-  fiveDaysFromNow.getDate() +
-  '/' +
-  fiveDaysFromNow.getFullYear();
+// document.getElementById('forecast-4-date').textContent =
+//   fourDaysFromNow.getMonth() +
+//   1 +
+//   '/' +
+//   fourDaysFromNow.getDate() +
+//   '/' +
+//   fourDaysFromNow.getFullYear();
+
+// document.getElementById('forecast-5-date').textContent =
+//   fiveDaysFromNow.getMonth() +
+//   1 +
+//   '/' +
+//   fiveDaysFromNow.getDate() +
+//   '/' +
+//   fiveDaysFromNow.getFullYear();
 
 init();
 
