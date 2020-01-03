@@ -131,8 +131,8 @@ function currentCity(lat, lon) {
 }
 
 function currentUV(lat, lon) {
-  lat = Math.round(lat);
-  lon = Math.round(lon);
+  // lat = Math.round(lat);
+  // lon = Math.round(lon);
   var queryURLUVindex =
     'https://api.openweathermap.org/data/2.5/uvi?appid=' +
     apikey +
@@ -214,6 +214,15 @@ function searchCity(userCityChoice) {
             response.list[0].weather[0].icon +
             '@2x.png'
         );
+        currentTemperature.textContent = (
+          (response.list[0].main.temp - 273.15) * (9 / 5) +
+          32
+        ).toFixed(1);
+        currentHumidity.textContent = response.list[0].main.humidity;
+        currentWindSpeed.textContent = response.list[0].wind.speed;
+        lat = response.city.coord.lat;
+        lon = response.city.coord.lon;
+        currentUV(lat, lon);
       }
     };
     xmlhttp.open('GET', queryURL, true);
