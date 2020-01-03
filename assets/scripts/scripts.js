@@ -42,8 +42,9 @@ function currentCity(lat, lon) {
     if (this.readyState == 4 && this.status == 200) {
       var response = JSON.parse(this.responseText);
       // console.log(response);
-      currentCityElement.textContent =
-        response.name + ', ' + response.sys.country;
+      // currentCityElement.textContent =
+      //   response.name + ', ' + response.sys.country;
+      searchCity(response.name);
       currentIcon.setAttribute(
         'src',
         'https://openweathermap.org/img/wn/' +
@@ -69,7 +70,6 @@ function currentCity(lat, lon) {
 function currentUV(lat, lon) {
   lat = Math.round(lat);
   lon = Math.round(lon);
-  console.log('being called');
   var queryURLUVindex =
     'https://api.openweathermap.org/data/2.5/uvi?appid=' +
     apikey +
@@ -77,7 +77,6 @@ function currentUV(lat, lon) {
     lat +
     '&lon=' +
     lon;
-  console.log(queryURLUVindex);
   var xmlhttpUVindex = new XMLHttpRequest();
   xmlhttpUVindex.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
