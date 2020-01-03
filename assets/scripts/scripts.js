@@ -108,18 +108,18 @@ function currentCity(lat, lon) {
       // currentCityElement.textContent =
       //   response.name + ', ' + response.sys.country;
       searchCity(response.name);
-      currentIcon.setAttribute(
-        'src',
-        'https://openweathermap.org/img/wn/' +
-          response.weather[0].icon +
-          '@2x.png'
-      );
-      currentTemperature.textContent = (
-        (response.main.temp - 273.15) * (9 / 5) +
-        32
-      ).toFixed(1);
-      currentHumidity.textContent = response.main.humidity;
-      currentWindSpeed.textContent = response.wind.speed;
+      // currentIcon.setAttribute(
+      //   'src',
+      //   'https://openweathermap.org/img/wn/' +
+      //     response.weather[0].icon +
+      //     '@2x.png'
+      // );
+      // currentTemperature.textContent = (
+      //   (response.main.temp - 273.15) * (9 / 5) +
+      //   32
+      // ).toFixed(1);
+      // currentHumidity.textContent = response.main.humidity;
+      // currentWindSpeed.textContent = response.wind.speed;
       // (0K − 273.15) × 9/5 + 32 = -459.7°F
     }
   };
