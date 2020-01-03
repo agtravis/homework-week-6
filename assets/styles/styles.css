@@ -113,19 +113,54 @@ footer p {
 .forecast-card {
     background-color: #4f3f94;
     width: 100px;
+    color: #fefefe;
+    padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8em;
 }
 
 @media screen and (max-width: 945px) {
     #forecast-cards {
         flex-direction: column;
+        justify-content: center;
     }
     .forecast-card {
-        width: 100%;
-        height: 150px;
-        margin-bottom: 10px;
+        margin: 0 auto 10px auto;
+        width: 50%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-size: 1em;
     }
 }
 
 .small-icon {
     width: 50px;
+    margin: 0 auto;
+}
+
+.bold {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+ul#searched-cities-UL {
+    margin-top: 20px;
+}
+
+ul#searched-cities-UL li {
+    list-style: none;
+    position: relative;
+    left: -20px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    padding: 5px;
+}
+
+ul#searched-cities-UL li:hover {
+    background-color: #aaa;
+    border-radius: 5px;
 }
