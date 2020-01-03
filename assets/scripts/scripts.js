@@ -37,6 +37,49 @@ console.log(threeDaysFromNow);
 var fourDaysFromNow = new Date(d);
 fourDaysFromNow.setDate(fourDaysFromNow.getDate() + 4);
 console.log(fourDaysFromNow);
+var fiveDaysFromNow = new Date(d);
+fiveDaysFromNow.setDate(fiveDaysFromNow.getDate() + 5);
+console.log(fiveDaysFromNow);
+
+document.getElementById('forecast-1-date').textContent =
+  tomorrow.getMonth() +
+  1 +
+  '/' +
+  tomorrow.getDate() +
+  '/' +
+  tomorrow.getFullYear();
+
+document.getElementById('forecast-2-date').textContent =
+  twoDaysFromNow.getMonth() +
+  1 +
+  '/' +
+  twoDaysFromNow.getDate() +
+  '/' +
+  twoDaysFromNow.getFullYear();
+
+document.getElementById('forecast-3-date').textContent =
+  threeDaysFromNow.getMonth() +
+  1 +
+  '/' +
+  threeDaysFromNow.getDate() +
+  '/' +
+  threeDaysFromNow.getFullYear();
+
+document.getElementById('forecast-4-date').textContent =
+  fourDaysFromNow.getMonth() +
+  1 +
+  '/' +
+  fourDaysFromNow.getDate() +
+  '/' +
+  fourDaysFromNow.getFullYear();
+
+document.getElementById('forecast-5-date').textContent =
+  fiveDaysFromNow.getMonth() +
+  1 +
+  '/' +
+  fiveDaysFromNow.getDate() +
+  '/' +
+  fiveDaysFromNow.getFullYear();
 
 init();
 
