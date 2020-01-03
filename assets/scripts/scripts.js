@@ -223,6 +223,24 @@ function searchCity(userCityChoice) {
         lat = response.city.coord.lat;
         lon = response.city.coord.lon;
         currentUV(lat, lon);
+        for (var i = 1; i <= 5; ++i) {
+          document
+            .getElementById('forecast-' + i + '-image')
+            .setAttribute(
+              'src',
+              'https://openweathermap.org/img/wn/' +
+                response.list[i * 8 - 1].weather[0].icon +
+                '@2x.png'
+            );
+          document.getElementById(
+            'forecast-' + i + '-temperature'
+          ).textContent = (
+            (response.list[i * 8 - 1].main.temp - 273.15) * (9 / 5) +
+            32
+          ).toFixed(1);
+          document.getElementById('forecast-' + i + '-humidity').textContent =
+            response.list[i * 8 - 1].main.humidity;
+        }
       }
     };
     xmlhttp.open('GET', queryURL, true);
