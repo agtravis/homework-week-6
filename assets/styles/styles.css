@@ -104,3 +104,25 @@ footer p {
 #city-input-field {
     width: 100%;
 }
+
+#forecast-cards {
+    display: flex;
+    justify-content: space-between;
+}
+
+.forecast-card {
+    background-color: #4f3f94;
+    width: 100px;
+    height: 150px;
+}
+
+@media screen and (max-width: 945px) {
+    #forecast-cards {
+        flex-direction: column;
+    }
+    .forecast-card {
+        width: 100%;
+        height: 150px;
+        margin-bottom: 10px;
+    }
+}
