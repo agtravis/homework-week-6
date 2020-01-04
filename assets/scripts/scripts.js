@@ -223,8 +223,6 @@ function searchCity(userCityChoice) {
         lat = response.city.coord.lat;
         lon = response.city.coord.lon;
         currentUV(lat, lon);
-        var hours = d.getHours();
-        d.setHours(12);
         for (var i = 1; i <= 5; ++i) {
           document
             .getElementById('forecast-' + i + '-image')
@@ -243,7 +241,6 @@ function searchCity(userCityChoice) {
           document.getElementById('forecast-' + i + '-humidity').textContent =
             response.list[i * 8 - 1].main.humidity;
         }
-        d.setHours(hours);
       }
     };
     xmlhttp.open('GET', queryURL, true);
