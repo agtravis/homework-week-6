@@ -223,6 +223,12 @@ function searchCity(userCityChoice) {
         lat = response.city.coord.lat;
         lon = response.city.coord.lon;
         currentUV(lat, lon);
+        var hours = d.getHours();
+        d.setHours(12);
+        var currentUTC = getUTC(d);
+        d.setHours(hours);
+        console.log(currentUTC + 'UTC');
+        searchObj(response, currentUTC);
         for (var i = 1; i <= 5; ++i) {
           document
             .getElementById('forecast-' + i + '-image')
@@ -284,5 +290,26 @@ function pickCity(userCityChoice) {
     searchedCities.push(userCityChoice);
     localStorage.setItem('searchedCities', JSON.stringify(searchedCities));
     return searchedCities[0];
+  }
+}
+
+function getUTC(d) {
+  var n = d.getTime();
+  n = n / 1000;
+  n = n - (n % 10800);
+  return n;
+}
+
+function searchObj(obj, query) {
+  for (var key in obj) {
+    var value = obj[key];
+
+    if (typeof value === 'object') {
+      searchObj(value, query);
+    }
+
+    if (value === query) {
+      console.log('property=' + key + ' value=' + value + 'index=');
+    }
   }
 }
