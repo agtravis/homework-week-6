@@ -204,6 +204,7 @@ function searchCity(userCityChoice) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
+        document.getElementById('app').classList.remove('hide');
         var response = JSON.parse(this.responseText);
         console.log(response);
         currentCityElement.textContent =
@@ -219,6 +220,10 @@ function searchCity(userCityChoice) {
           32
         ).toFixed(1);
         currentHumidity.textContent = response.list[0].main.humidity;
+        var windSpeedMPS = response.list[0].wind.speed;
+        var windSpeedMPH =
+          Math.round(((windSpeedMPS * 3600) / 1610.3) * 1000) / 1000;
+        // Math.round(((meterspersecond * 3600) / 1610.3) * 1000) / 1000;
         currentWindSpeed.textContent = response.list[0].wind.speed;
         lat = response.city.coord.lat;
         lon = response.city.coord.lon;

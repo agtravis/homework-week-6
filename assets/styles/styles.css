@@ -62,7 +62,7 @@ body {
     border-radius: 10px;
     padding: 10px;
     margin-bottom: 50px;
-    padding: 15px;
+    padding: 25px;
 }
 
 #main-row {
@@ -108,6 +108,7 @@ footer p {
 #forecast-cards {
     display: flex;
     justify-content: space-between;
+    margin-top: 20px;
 }
 
 .forecast-card {
@@ -137,6 +138,14 @@ footer p {
     }
 }
 
+.hide {
+    display: none;
+}
+
+#current-city-header {
+    text-align: center;
+}
+
 .small-icon {
     width: 50px;
     margin: 0 auto;
@@ -157,6 +166,11 @@ footer p {
 
 ul#searched-cities-UL {
     margin-top: 20px;
+    border-right: 1px solid #d88792;
+}
+
+hr {
+    border-top: 1px solid #d88792;
 }
 
 ul#searched-cities-UL li {
