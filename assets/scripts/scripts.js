@@ -17,22 +17,8 @@ var lon = '';
 var lostCity = '';
 
 var d = new Date();
-// console.log(d);
-// console.log(d.getMonth() + 1 + '/' + d.getDate() + '/' + d.getFullYear());
-// console.log(d.getUTCDate());
 currentDateElement.textContent =
   '(' + (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear() + ')';
-
-// var tomorrow = new Date(d);
-// tomorrow.setDate(tomorrow.getDate() + 1);
-// var twoDaysFromNow = new Date(d);
-// twoDaysFromNow.setDate(twoDaysFromNow.getDate() + 2);
-// var threeDaysFromNow = new Date(d);
-// threeDaysFromNow.setDate(threeDaysFromNow.getDate() + 3);
-// var fourDaysFromNow = new Date(d);
-// fourDaysFromNow.setDate(fourDaysFromNow.getDate() + 4);
-// var fiveDaysFromNow = new Date(d);
-// fiveDaysFromNow.setDate(fiveDaysFromNow.getDate() + 5);
 
 for (var i = 1; i <= 5; ++i) {
   var nextDay = new Date(d);
@@ -46,114 +32,27 @@ for (var i = 1; i <= 5; ++i) {
     nextDay.getFullYear();
 }
 
-// document.getElementById('forecast-1-date').textContent =
-//   tomorrow.getMonth() +
-//   1 +
-//   '/' +
-//   tomorrow.getDate() +
-//   '/' +
-//   tomorrow.getFullYear();
-
-// document.getElementById('forecast-2-date').textContent =
-//   twoDaysFromNow.getMonth() +
-//   1 +
-//   '/' +
-//   twoDaysFromNow.getDate() +
-//   '/' +
-//   twoDaysFromNow.getFullYear();
-
-// document.getElementById('forecast-3-date').textContent =
-//   threeDaysFromNow.getMonth() +
-//   1 +
-//   '/' +
-//   threeDaysFromNow.getDate() +
-//   '/' +
-//   threeDaysFromNow.getFullYear();
-
-// document.getElementById('forecast-4-date').textContent =
-//   fourDaysFromNow.getMonth() +
-//   1 +
-//   '/' +
-//   fourDaysFromNow.getDate() +
-//   '/' +
-//   fourDaysFromNow.getFullYear();
-
-// document.getElementById('forecast-5-date').textContent =
-//   fiveDaysFromNow.getMonth() +
-//   1 +
-//   '/' +
-//   fiveDaysFromNow.getDate() +
-//   '/' +
-//   fiveDaysFromNow.getFullYear();
-
 init();
 
 navigator.geolocation.getCurrentPosition(showPosition);
 
-function showPosition(position) {
-  lat = position.coords.latitude;
-  lon = position.coords.longitude;
-  currentCity(lat, lon);
-}
+cityInputField.addEventListener('keyup', function(event) {
+  if (event.key === 'Enter') {
+    cityInputField.value = capitalize(cityInputField.value);
+    searchCity(cityInputField.value);
+    cityInputField.value = '';
+  }
+});
 
-function currentCity(lat, lon) {
-  // console.log('lat: ' + lat + '\nlon: ' + lon);
-  var queryURL =
-    URLname + 'weather?lat=' + lat + '&lon=' + lon + '&APPID=' + apikey;
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var response = JSON.parse(this.responseText);
-      // console.log(response);
-      // currentCityElement.textContent =
-      //   response.name + ', ' + response.sys.country;
-      searchCity(response.name);
-      // currentIcon.setAttribute(
-      //   'src',
-      //   'https://openweathermap.org/img/wn/' +
-      //     response.weather[0].icon +
-      //     '@2x.png'
-      // );
-      // currentTemperature.textContent = (
-      //   (response.main.temp - 273.15) * (9 / 5) +
-      //   32
-      // ).toFixed(1);
-      // currentHumidity.textContent = response.main.humidity;
-      // currentWindSpeed.textContent = response.wind.speed;
-      // (0K − 273.15) × 9/5 + 32 = -459.7°F
-    }
-  };
-  xmlhttp.open('GET', queryURL, true);
-  xmlhttp.onload = function() {
-    currentUV(lat, lon);
-  };
-  xmlhttp.send();
-}
-
-function currentUV(lat, lon) {
-  // lat = Math.round(lat);
-  // lon = Math.round(lon);
-  var queryURLUVindex =
-    'https://api.openweathermap.org/data/2.5/uvi?appid=' +
-    apikey +
-    '&lat=' +
-    lat +
-    '&lon=' +
-    lon;
-  var xmlhttpUVindex = new XMLHttpRequest();
-  xmlhttpUVindex.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var responseUVIndex = JSON.parse(this.responseText);
-      currentUVIndex.textContent = responseUVIndex.value;
-    }
-  };
-  xmlhttpUVindex.open('GET', queryURLUVindex, true);
-  xmlhttpUVindex.send();
-}
+searchedCitiesUL.addEventListener('click', function(event) {
+  var element = event.target;
+  if (element.matches('li')) {
+    searchCity(element.textContent);
+  }
+});
 
 function init() {
   searchedCities = JSON.parse(localStorage.getItem('searchedCities'));
-  console.log(searchedCities);
   if (searchedCities) {
     renderSearchedCities();
   } else {
@@ -172,29 +71,46 @@ function renderSearchedCities() {
   }
 }
 
-cityInputField.addEventListener('keyup', function(event) {
-  if (event.key === 'Enter') {
-    cityInputField.value = capitalize(cityInputField.value);
-    searchCity(cityInputField.value);
-    cityInputField.value = '';
-  }
-});
+function showPosition(position) {
+  lat = position.coords.latitude;
+  lon = position.coords.longitude;
+  currentCity(lat, lon);
+}
 
-searchedCitiesUL.addEventListener('click', function(event) {
-  var element = event.target;
-  if (element.matches('li')) {
-    searchCity(element.textContent);
-  }
-});
+function currentCity(lat, lon) {
+  var queryURL =
+    URLname + 'weather?lat=' + lat + '&lon=' + lon + '&APPID=' + apikey;
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var response = JSON.parse(this.responseText);
+      searchCity(response.name);
+    }
+  };
+  xmlhttp.open('GET', queryURL, true);
+  xmlhttp.onload = function() {
+    currentUV(lat, lon);
+  };
+  xmlhttp.send();
+}
 
-function capitalize(userCityChoice) {
-  userCityChoice = userCityChoice.toLowerCase();
-  userCityChoice = userCityChoice.split(' ');
-  for (var i = 0; i < userCityChoice.length; ++i) {
-    userCityChoice[i] =
-      userCityChoice[i].charAt(0).toUpperCase() + userCityChoice[i].slice(1);
-  }
-  return userCityChoice.join(' ');
+function currentUV(lat, lon) {
+  var queryURLUVindex =
+    'https://api.openweathermap.org/data/2.5/uvi?appid=' +
+    apikey +
+    '&lat=' +
+    lat +
+    '&lon=' +
+    lon;
+  var xmlhttpUVindex = new XMLHttpRequest();
+  xmlhttpUVindex.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var responseUVIndex = JSON.parse(this.responseText);
+      currentUVIndex.textContent = responseUVIndex.value;
+    }
+  };
+  xmlhttpUVindex.open('GET', queryURLUVindex, true);
+  xmlhttpUVindex.send();
 }
 
 function searchCity(userCityChoice) {
@@ -206,7 +122,6 @@ function searchCity(userCityChoice) {
       if (this.readyState == 4 && this.status == 200) {
         document.getElementById('app').classList.remove('hide');
         var response = JSON.parse(this.responseText);
-        console.log(response);
         currentCityElement.textContent =
           response.city.name + ', ' + response.city.country;
         currentIcon.setAttribute(
@@ -223,35 +138,16 @@ function searchCity(userCityChoice) {
         var windSpeedMPS = response.list[0].wind.speed;
         var windSpeedMPH =
           Math.round(((windSpeedMPS * 3600) / 1610.3) * 1000) / 1000;
-        // Math.round(((meterspersecond * 3600) / 1610.3) * 1000) / 1000;
-        currentWindSpeed.textContent = response.list[0].wind.speed;
+        currentWindSpeed.textContent = windSpeedMPH.toFixed(1);
         lat = response.city.coord.lat;
         lon = response.city.coord.lon;
         currentUV(lat, lon);
-        var hours = d.getHours();
-        d.setHours(12);
-        var currentUTC = getUTC(d);
-        d.setHours(hours);
-        console.log(currentUTC + 'UTC');
-        searchObj(response, currentUTC);
-        for (var i = 1; i <= 5; ++i) {
-          document
-            .getElementById('forecast-' + i + '-image')
-            .setAttribute(
-              'src',
-              'https://openweathermap.org/img/wn/' +
-                response.list[i * 8 - 1].weather[0].icon +
-                '@2x.png'
-            );
-          document.getElementById(
-            'forecast-' + i + '-temperature'
-          ).textContent = (
-            (response.list[i * 8 - 1].main.temp - 273.15) * (9 / 5) +
-            32
-          ).toFixed(1);
-          document.getElementById('forecast-' + i + '-humidity').textContent =
-            response.list[i * 8 - 1].main.humidity;
-        }
+        // var hours = d.getHours();
+        // d.setHours(12);
+        // var currentUTC = getUTC(d);
+        // d.setHours(hours);
+        // searchObj(response, currentUTC);
+        forecast(response);
       }
     };
     xmlhttp.open('GET', queryURL, true);
@@ -270,6 +166,25 @@ function searchCity(userCityChoice) {
   }
 }
 
+function forecast(response) {
+  for (var i = 1; i <= 5; ++i) {
+    document
+      .getElementById('forecast-' + i + '-image')
+      .setAttribute(
+        'src',
+        'https://openweathermap.org/img/wn/' +
+          response.list[i * 8 - 1].weather[0].icon +
+          '@2x.png'
+      );
+    document.getElementById('forecast-' + i + '-temperature').textContent = (
+      (response.list[i * 8 - 1].main.temp - 273.15) * (9 / 5) +
+      32
+    ).toFixed(1);
+    document.getElementById('forecast-' + i + '-humidity').textContent =
+      response.list[i * 8 - 1].main.humidity;
+  }
+}
+
 function pickCity(userCityChoice) {
   if (searchedCities) {
     if (!userCityChoice) {
@@ -285,7 +200,6 @@ function pickCity(userCityChoice) {
       while (searchedCities.length > 8) {
         lostCity = searchedCities[8];
         searchedCities.pop();
-        console.log(lostCity);
       }
       localStorage.setItem('searchedCities', JSON.stringify(searchedCities));
       init();
@@ -298,23 +212,33 @@ function pickCity(userCityChoice) {
   }
 }
 
-function getUTC(d) {
-  var n = d.getTime();
-  n = n / 1000;
-  n = n - (n % 10800);
-  return n;
-}
-
-function searchObj(obj, query) {
-  for (var key in obj) {
-    var value = obj[key];
-
-    if (typeof value === 'object') {
-      searchObj(value, query);
-    }
-
-    if (value === query) {
-      console.log('property=' + key + ' value=' + value + 'index=');
-    }
+function capitalize(userCityChoice) {
+  userCityChoice = userCityChoice.toLowerCase();
+  userCityChoice = userCityChoice.split(' ');
+  for (var i = 0; i < userCityChoice.length; ++i) {
+    userCityChoice[i] =
+      userCityChoice[i].charAt(0).toUpperCase() + userCityChoice[i].slice(1);
   }
+  return userCityChoice.join(' ');
 }
+
+// function getUTC(d) {
+//   var n = d.getTime();
+//   n = n / 1000;
+//   n = n - (n % 10800);
+//   return n;
+// }
+
+// function searchObj(obj, query) {
+//   for (var key in obj) {
+//     var value = obj[key];
+
+//     if (typeof value === 'object') {
+//       searchObj(value, query);
+//     }
+
+//     if (value === query) {
+//       console.log('property=' + key + ' value=' + value + 'index=');
+//     }
+//   }
+// }
