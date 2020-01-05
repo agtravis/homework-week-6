@@ -43,18 +43,20 @@
         <div class="col-lg-9 col-md-10 col-sm-10 col-12" id="main-container">
           <div class="row">
             <div class="col-12">
-              <h1>Weather Dashboard</h1>
+              <h1 class="center">Weather Dashboard</h1>
+              <hr />
             </div>
           </div>
           <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-12">
-              <h5>Search for a city:</h5>
+              <h6>Search for a city:</h6>
               <input
                 type="text"
                 id="city-input-field"
                 placeholder="Hit 'Enter' to search"
               />
-              <p>Previous Searches:</p>
+              <hr />
+              <h6 id="prev-searches">Previous Searches:</h6>
               <ul id="searched-cities-UL"></ul>
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9 col-12">
@@ -73,6 +75,7 @@
               </div>
               <div class="row">
                 <div class="col-12">
+                  <hr />
                   <h5>5-Day Forecast:</h5>
                   <div id="forecast-cards">
                     <div class="forecast-card">

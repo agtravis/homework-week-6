@@ -147,6 +147,14 @@ footer p {
     font-size: 1.2em;
 }
 
+.center {
+    text-align: center;
+}
+
+#prev-searches {
+    margin-top: 20px;
+}
+
 ul#searched-cities-UL {
     margin-top: 20px;
 }
@@ -157,10 +165,17 @@ ul#searched-cities-UL li {
     left: -20px;
     cursor: pointer;
     margin-bottom: 15px;
-    padding: 5px;
+    padding: 10px;
+    font-weight: bold;
+    color: #791624;
 }
 
 ul#searched-cities-UL li:hover {
-    background-color: #aaa;
+    background-color: #d88792;
     border-radius: 5px;
+}
+
+#current-city {
+    font-weight: bold;
+    color: #791624;
 }
