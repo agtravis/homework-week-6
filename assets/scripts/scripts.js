@@ -122,23 +122,7 @@ function searchCity(userCityChoice) {
       if (this.readyState == 4 && this.status == 200) {
         document.getElementById('app').classList.remove('hide');
         var response = JSON.parse(this.responseText);
-        currentCityElement.textContent =
-          response.city.name + ', ' + response.city.country;
-        currentIcon.setAttribute(
-          'src',
-          'https://openweathermap.org/img/wn/' +
-            response.list[0].weather[0].icon +
-            '@2x.png'
-        );
-        currentTemperature.textContent = (
-          (response.list[0].main.temp - 273.15) * (9 / 5) +
-          32
-        ).toFixed(1);
-        currentHumidity.textContent = response.list[0].main.humidity;
-        var windSpeedMPS = response.list[0].wind.speed;
-        var windSpeedMPH =
-          Math.round(((windSpeedMPS * 3600) / 1610.3) * 1000) / 1000;
-        currentWindSpeed.textContent = windSpeedMPH.toFixed(1);
+        currentInfo(response);
         lat = response.city.coord.lat;
         lon = response.city.coord.lon;
         currentUV(lat, lon);
@@ -164,6 +148,25 @@ function searchCity(userCityChoice) {
     };
     xmlhttp.send();
   }
+}
+
+function currentInfo(response) {
+  currentCityElement.textContent =
+    response.city.name + ', ' + response.city.country;
+  currentIcon.setAttribute(
+    'src',
+    'https://openweathermap.org/img/wn/' +
+      response.list[0].weather[0].icon +
+      '@2x.png'
+  );
+  currentTemperature.textContent = (
+    (response.list[0].main.temp - 273.15) * (9 / 5) +
+    32
+  ).toFixed(1);
+  currentHumidity.textContent = response.list[0].main.humidity;
+  var windSpeedMPS = response.list[0].wind.speed;
+  var windSpeedMPH = Math.round(((windSpeedMPS * 3600) / 1610.3) * 1000) / 1000;
+  currentWindSpeed.textContent = windSpeedMPH.toFixed(1);
 }
 
 function forecast(response) {
