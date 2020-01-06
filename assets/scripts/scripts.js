@@ -15,8 +15,8 @@ var searchedCities = [];
 var lat = '';
 var lon = '';
 var lostCity = '';
-
 var d = new Date();
+
 currentDateElement.textContent =
   '(' + (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear() + ')';
 
@@ -85,12 +85,10 @@ function currentCity(lat, lon) {
     if (this.readyState == 4 && this.status == 200) {
       var response = JSON.parse(this.responseText);
       searchCity(response.name);
+      currentUV(lat, lon);
     }
   };
   xmlhttp.open('GET', queryURL, true);
-  xmlhttp.onload = function() {
-    currentUV(lat, lon);
-  };
   xmlhttp.send();
 }
 
