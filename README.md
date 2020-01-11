@@ -69,5 +69,5 @@ I wanted to just use native JavaScript for this project. I do use Bootstrap to h
 
 ## Technology Used
 
-- [Bootsrap](https://getbootstrap.com/)
+- [Bootstrap](https://getbootstrap.com/)
 - [OpenWeather Map](https://api.openweathermap.org)
