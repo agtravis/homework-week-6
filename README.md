@@ -66,3 +66,8 @@ There were a few things in creating this app that were not essential to the brie
 1. The forecasts are always for 24 hour periods. I wanted to display the forecast for a set time each day, perhaps 12noon. I could not figure out how to do this. I was able to use a search to navigate to a targeted UTC, but I stopped short of being able to manipulate it to my needs. I have deliberaly left that code in my script but commented out, should I wish to return to it. All it does at present is it gets the UTC to a value that will be matched in the response object (The UTC array objects are all 10800 seconds apart, 3 hours, so all I had to do was get the current UTC and shave off the remainder when divided by 10800, but first converting the milliseconds), and logs it to the console.
 
 I wanted to just use native JavaScript for this project. I do use Bootstrap to help with responsiveness, and to make it look like my other projects in terms of consistent style, but I wanted to refrain from linking to any other libraries - Moment.js and jQuery in particular. I am familiar with the `$.ajax` `'GET'` requests since they are simple, and I feel like I had a little more flexibility in handling my `404` response from using JavaScript instead.
+
+## Technology Used
+
+- [Bootsrap](https://getbootstrap.com/)
+- [OpenWeather Map](https://api.openweathermap.org)
