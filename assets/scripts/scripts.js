@@ -1,3 +1,4 @@
+//stored elements
 var cityInputField = document.getElementById('city-input-field');
 var searchedCitiesUL = document.getElementById('searched-cities-UL');
 var currentCityElement = document.getElementById('current-city');
